@@ -25,11 +25,11 @@
 
 ✔️ Первый запуск
 ```
-    docker build . -t admin_api__app:latest  
+docker build . -t admin_api__app:latest  
 ```
 
 
 ✔️ Запуск docker compose
 ```
-    docker compose up --build --force-recreate
+docker compose up --build --force-recreate
 ```
