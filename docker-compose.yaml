@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+    container_name: app
+    env_file:
+      - .env
+    ports:
+      - 9999:8000
+    depends_on:
+      db_postgre:
+        condition: service_healthy
+
+  db_postgre:
+    image: postgres:14
+    container_name: db_postgre
+    ports:
+      - 5454:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    env_file:
+      - .env
+    ports:
+      - 5050:80
+  
+  db_mongo:
+    image: mongo:6.0.4
+    container_name: db_mongo
+    ports:
+      - 27027:27017
+    env_file:
+      - .env
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  postgres_data:
+  mongo_data:

@@ -7,6 +7,10 @@ from utils import (
     MG_HOST, MG_PORT
 )
 
+
+dbMG = MongoClient(f"mongodb://{MG_HOST}:{MG_PORT}/").admindb
+
+
 dbPGcon = psycopg2.connect(
     dbname=PG_NAME,
     user=PG_USER,
@@ -15,7 +19,3 @@ dbPGcon = psycopg2.connect(
     port=PG_PORT
 )
 dbPG = dbPGcon.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-dbMG = MongoClient(
-    host=f"{MG_HOST}:{MG_PORT}"
-).admindb
